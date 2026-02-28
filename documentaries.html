@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Documentaries — IMI</title>
+  <meta name="description" content="Feature and short documentaries crafted for festivals, streaming, and institutional impact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <style>
+    :root{
+      --ink:#0b1220; --ink2:#0f1a2f;
+      --gold:#c8a35f; --gold2:#e2c17b;
+      --text:#e9eef8; --muted:#b9c4d8;
+      --border:rgba(200,163,95,.22);
+      --shadow:0 0 0 1px rgba(200,163,95,.18), 0 22px 70px rgba(0,0,0,.55);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--ink);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1180px;margin:0 auto;padding:0 18px}
+    .nav{position:sticky;top:0;z-index:10;padding:14px 0;background:linear-gradient(180deg, rgba(11,18,32,.92), rgba(11,18,32,.65));backdrop-filter: blur(10px);border-bottom:1px solid var(--border)}
+    .navInner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{height:40px;width:40px;border-radius:14px;display:grid;place-items:center;background:rgba(15,26,47,.85);border:1px solid var(--border);color:var(--gold2);font-weight:900;letter-spacing:.5px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border-radius:999px;border:1px solid rgba(200,163,95,.35);
+      background:linear-gradient(180deg, rgba(200,163,95,.18), rgba(200,163,95,.06));color:#f4e7c6; cursor:pointer;}
+    .btnPrimary{background:linear-gradient(180deg, rgba(226,193,123,.96), rgba(200,163,95,.86));color:var(--ink);border-color:rgba(226,193,123,.96)}
+    .hero{padding:40px 0 22px}
+    h1{margin:0 0 10px;font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px;font-weight:900;font-size:clamp(32px,4vw,48px)}
+    p{margin:0;color:#c9d3e5;line-height:1.8;max-width:78ch}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:24px 0 70px}
+    .card{border-radius:22px;border:1px solid rgba(200,163,95,.22);background:rgba(15,26,47,.55);overflow:hidden;box-shadow:var(--shadow)}
+    .cardTop{padding:14px;border-bottom:1px solid rgba(200,163,95,.16);display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .chip{font-size:12px;border:1px solid rgba(200,163,95,.22);background:rgba(11,18,32,.45);color:#e7d8b3;padding:6px 10px;border-radius:999px}
+    .cardBody{padding:14px}
+    .thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:16px;border:1px solid rgba(200,163,95,.16);background:rgba(11,18,32,.55)}
+    .muted{color:#b7c3d7;font-size:13px}
+    @media (max-width: 980px){ .grid{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="container">
+      <div class="navInner">
+        <a class="brand" href="../index.html">
+          <div class="logo">IMI</div>
+          <div style="line-height:1.05">
+            <strong style="display:block;font-family:ui-serif,Georgia,Cambria,'Times New Roman',Times,serif;letter-spacing:.35px">Inside of Mental Injustice</strong>
+            <span class="muted">Media • Production • Advocacy</span>
+          </div>
+        </a>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="../index.html#productions">← Back</a>
+          <a class="btn btnPrimary" href="../admin/index.html">Admin</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Documentaries</h1>
+      <p>Feature and short documentaries crafted for festivals, streaming, and institutional impact.</p>
+      <p class="muted" style="margin-top:10px">This page auto-populates from Admin (demo uses your browser storage). For production, connect uploads to a real storage provider.</p>
+    </div>
+  </section>
+
+  <section class="container">
+    <div id="list" class="grid"></div>
+  </section>
+
+  <script>
+    const storeKey = 'imi_productions_v1';
+    const kind = "documentaries";
+    const defaults = {
+      documentaries: [
+        {title:"Episode 1: Solitary Nation (sample)", tag:"Documentary", thumb:"", url:"", description:"Add a poster image + video link from Admin."},
+      ],
+      podcasts: [
+        {title:"IMI Podcast: The Record (sample)", tag:"Podcast", thumb:"", url:"", description:"Add a player link (Spotify/Apple) from Admin."},
+      ],
+      investigations: [
+        {title:"Investigation: Paper Trails (sample)", tag:"Investigation", thumb:"", url:"", description:"Add your campaign page or video link from Admin."},
+      ]
+    };
+    function load() {
+      try{ const raw = localStorage.getItem(storeKey); return raw ? JSON.parse(raw) : defaults; }catch{ return defaults; }
+    }
+    function safe(s){ return (s||'').toString().replace(/[<>&"]/g, c=>({ '<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;' }[c])); }
+    function render() {
+      const data = load();
+      const items = data[kind] || defaults[kind] || [];
+      const root = document.getElementById('list');
+      if(!items.length) {
+        root.innerHTML = `<div class="card" style="grid-column:1/-1"><div class="cardBody">No items yet. Add one in Admin.</div></div>`;
+        return;
+      }
+      root.innerHTML = items.map(it=>{
+        const t = safe(it.title);
+        const d = safe(it.description);
+        const tag = safe(it.tag || kind);
+        const thumb = (it.thumb||'').trim();
+        const url = (it.url||'').trim();
+        const thumbHtml = thumb ? `<img class="thumb" src="${safe(thumb)}" alt="${t}" loading="lazy" />` : `<div class="thumb" style="display:grid;place-items:center;color:#b7c3d7">No poster yet</div>`;
+        const linkHtml = url ? `<a class="btn btnPrimary" href="${safe(url)}" target="_blank" rel="noopener">Open</a>` : `<span class="muted">Add a link in Admin</span>`;
+        return `
+          <div class="card">
+            <div class="cardTop"><strong>${t}</strong><span class="chip">${tag}</span></div>
+            <div class="cardBody">
+              ${thumbHtml}
+              <div style="margin-top:10px;color:#c9d3e5;line-height:1.6">${d}</div>
+              <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">${linkHtml}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    render();
+    window.addEventListener('storage', (e)=>{ if(e.key===storeKey) render(); });
+  </script>
+</body>
+</html>

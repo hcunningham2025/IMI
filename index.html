@@ -3,541 +3,369 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Inside of Mental Injustice (IMI) — Media & Production</title>
-  <meta name="description" content="Inside of Mental Injustice (IMI) is a survivor-led social impact media and production company exposing mental health injustice and mass incarceration while building pathways toward accountability, healing, and reform." />
-
+  <title>Inside of Mental Injustice</title>
+  <meta name="description" content="Inside of Mental Injustice (IMI) — survivor-led media production: documentaries, podcasts, investigations, and advocacy campaigns." />
   <style>
     :root{
-      --ink:#0b1220; --ink2:#0f1a2f;
+      --bg:#0b1220; --bg2:#0f1a2f; --panel:rgba(15,26,47,.58);
       --gold:#c8a35f; --gold2:#e2c17b;
-      --text:#e9eef8; --muted:#b9c4d8;
+      --text:#e9eef8; --muted:#b7c3d7;
       --border:rgba(200,163,95,.22);
-      --glass:rgba(15,26,47,.62);
-      --shadow:0 0 0 1px rgba(200,163,95,.18), 0 22px 70px rgba(0,0,0,.55);
+      --shadow: 0 0 0 1px rgba(200,163,95,.18), 0 22px 70px rgba(0,0,0,.55);
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;background:var(--ink);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
     a{color:inherit;text-decoration:none}
-    img{max-width:100%}
-
-    /* Progress bar */
-    .progress{position:fixed;top:0;left:0;height:4px;width:0;background:var(--gold2);z-index:80}
-
-    /* NAV */
-    .navWrap{position:fixed;top:14px;left:0;right:0;z-index:70}
     .container{max-width:1180px;margin:0 auto;padding:0 18px}
     .nav{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:12px 14px;border-radius:18px;
-      background:linear-gradient(180deg, rgba(15,26,47,.72), rgba(15,26,47,.35));
-      backdrop-filter: blur(12px);
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
+      position:sticky; top:0; z-index:50;
+      background:linear-gradient(180deg, rgba(11,18,32,.92), rgba(11,18,32,.70));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
     }
-    .brand{display:flex;align-items:center;gap:12px;min-width:260px}
+    .navInner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px}
     .logo{height:40px;width:40px;border-radius:14px;display:grid;place-items:center;background:rgba(15,26,47,.85);border:1px solid var(--border);color:var(--gold2);font-weight:900;letter-spacing:.5px}
-    .brandTitle{line-height:1.05}
-    .brandTitle strong{display:block;font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px}
-    .brandTitle span{font-size:12px;color:#c9d3e5}
-    .navLinks{display:flex;gap:8px;align-items:center}
-    .navLinks a{padding:10px 12px;border-radius:14px;color:#d8e0ee;font-size:14px}
-    .navLinks a:hover{background:rgba(200,163,95,.10)}
-    .navActions{display:flex;gap:10px;align-items:center}
-
+    .links{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .chipLink{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(200,163,95,.22);
+      background:rgba(11,18,32,.45);
+      color:#dfe7f6;
+      transition:transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .chipLink:hover{transform:translateY(-1px);border-color:rgba(226,193,123,.55);background:rgba(15,26,47,.65)}
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
       padding:12px 14px;border-radius:999px;
       border:1px solid rgba(200,163,95,.35);
       background:linear-gradient(180deg, rgba(200,163,95,.18), rgba(200,163,95,.06));
       color:#f4e7c6; cursor:pointer;
-      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
-      user-select:none;
+      transition:transform .15s ease;
     }
-    .btn:hover{transform:translateY(-1px);border-color:rgba(226,193,123,.72);box-shadow:0 14px 44px rgba(0,0,0,.35)}
-    .btnPrimary{background:linear-gradient(180deg, rgba(226,193,123,.96), rgba(200,163,95,.86));color:var(--ink);border-color:rgba(226,193,123,.96)}
-    .iconBtn{height:44px;width:44px;border-radius:14px;border:1px solid var(--border);background:rgba(15,26,47,.65);display:grid;place-items:center;cursor:pointer}
-    .iconBtn:hover{background:rgba(15,26,47,.9)}
-    .mobileOnly{display:none}
+    .btn:hover{transform:translateY(-1px)}
+    .btnPrimary{background:linear-gradient(180deg, rgba(226,193,123,.96), rgba(200,163,95,.86));color:var(--bg);border-color:rgba(226,193,123,.96)}
 
-    /* HERO — cinematic background contained only to hero */
-    .hero{
-      position:relative; overflow:hidden; z-index:0;
-      padding:128px 0 72px;
-      background:
-        radial-gradient(900px 500px at 70% 25%, rgba(226,193,123,.18), transparent 55%),
-        radial-gradient(700px 420px at 20% 70%, rgba(200,163,95,.12), transparent 60%),
-        linear-gradient(180deg, rgba(11,18,32,.72), rgba(11,18,32,.98)),
-        linear-gradient(135deg, rgba(15,26,47,.88), rgba(11,18,32,.98));
+    /* HERO */
+    .hero{position:relative;overflow:hidden}
+    .parallaxA,.parallaxB{
+      position:absolute; inset:-18% -18%;
+      will-change:transform; pointer-events:none;
     }
-    .hero::before{
-      /* AI-style “cinematic” texture as inline SVG (always loads) */
-      content:""; position:absolute; inset:-2px; z-index:-1; opacity:.85;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='900'%3E%3Cdefs%3E%3CradialGradient id='g' cx='60%25' cy='35%25' r='70%25'%3E%3Cstop offset='0' stop-color='%23e2c17b' stop-opacity='.22'/%3E%3Cstop offset='.55' stop-color='%23c8a35f' stop-opacity='.10'/%3E%3Cstop offset='1' stop-color='%230b1220' stop-opacity='0'/%3E%3C/radialGradient%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='1400' height='900' fill='%230b1220'/%3E%3Cpath d='M0 650 C 240 520, 520 820, 760 660 S 1200 700, 1400 560 L 1400 900 L 0 900 Z' fill='%230f1a2f' opacity='.55'/%3E%3Cpath d='M0 520 C 260 400, 520 650, 820 520 S 1180 520, 1400 420 L 1400 900 L 0 900 Z' fill='%231a2438' opacity='.42'/%3E%3Crect width='1400' height='900' fill='url(%23g)'/%3E%3Crect width='1400' height='900' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E");
-      background-size:cover; background-position:center;
-      transform:scale(1.02);
+    .parallaxA{background:radial-gradient(820px 520px at 55% 30%, rgba(226,193,123,.16), transparent 62%), radial-gradient(760px 460px at 20% 70%, rgba(200,163,95,.12), transparent 62%);}
+    .parallaxB{opacity:.22;mix-blend-mode:overlay;background-image:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,0)), radial-gradient(circle at 40% 40%, rgba(255,255,255,.06), transparent 55%)}
+    .heroInner{position:relative;padding:54px 0 26px}
+    .banner{
+      opacity:0; transform:translateY(18px);
+      transition:opacity .9s ease, transform .9s ease;
     }
+    .banner.loaded{opacity:1; transform:none}
+    .heroGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:stretch}
+    h1{margin:0 0 10px;font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px;font-weight:900;font-size:clamp(34px,4.4vw,58px)}
+    .lead{margin:0;color:#c9d3e5;line-height:1.85;max-width:80ch}
+    .kpis{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .kpi{border-radius:18px;border:1px solid rgba(200,163,95,.18);background:rgba(15,26,47,.55);padding:12px 12px;min-width:180px}
+    .kpi b{display:block;letter-spacing:.2px}
+    .kpi span{color:var(--muted);font-size:13px;line-height:1.6}
 
-    .heroGrid{display:grid;grid-template-columns:1.25fr .75fr;gap:26px;align-items:center}
-    .kicker{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
-    .badge{border:1px solid rgba(200,163,95,.32);background:rgba(15,26,47,.55);padding:7px 10px;border-radius:999px;color:#f1e2c0;font-size:12px}
-
-    .h1{margin:0 0 12px;font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px;font-weight:900;font-size:clamp(34px, 4.4vw, 56px);line-height:1.02}
-    .sub{margin:0 0 12px;color:#d7e0ef;max-width:62ch;line-height:1.7}
-    .ctaRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
-
-    .founderCard{border-radius:26px;border:1px solid rgba(200,163,95,.25);background:linear-gradient(180deg, rgba(15,26,47,.72), rgba(15,26,47,.38));box-shadow:var(--shadow);overflow:hidden}
-    .founderImg{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
-    .founderBody{padding:14px 16px 16px}
-    .founderBody h3{margin:0 0 6px;font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px}
-    .founderBody p{margin:0;color:#c9d3e5;font-size:14px;line-height:1.55}
-
-    /* Sections */
-    .section{padding:72px 0; background:var(--ink); position:relative; z-index:1;}
-    .sectionAlt{
-      background:
-        radial-gradient(900px 520px at 60% 35%, rgba(226,193,123,.12), transparent 60%),
-        linear-gradient(180deg, rgba(11,18,32,.86), rgba(11,18,32,.98));
-      position:relative;
-    }
-    .sectionTitle{margin:0 0 10px;font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px;font-size:30px}
-    .sectionLead{margin:0 0 18px;color:#d4ddef;line-height:1.72;max-width:72ch}
-    .divider{height:1px;background:linear-gradient(90deg, transparent, rgba(200,163,95,.55), transparent);margin:18px 0}
-    .panel{border-radius:22px;border:1px solid rgba(200,163,95,.22);background:rgba(15,26,47,.55);padding:16px}
-
-    /* Cards */
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .card{
-      border-radius:22px;border:1px solid rgba(200,163,95,.22);
-      background:rgba(15,26,47,.55);overflow:hidden;
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      border-radius:24px;border:1px solid rgba(200,163,95,.22);
+      background:rgba(15,26,47,.55);
+      box-shadow:var(--shadow);
+      overflow:hidden;
     }
-    .card:hover{transform:translateY(-2px);border-color:rgba(226,193,123,.55);box-shadow:0 22px 60px rgba(0,0,0,.35)}
-    .thumb{width:100%;height:210px;display:block;background-size:cover;background-position:center}
-    .thumb::before{content:"";display:block;width:100%;height:100%;background:linear-gradient(180deg, rgba(11,18,32,.08), rgba(11,18,32,.76))}
-    .thumbLabel{
-      position:absolute;left:14px;bottom:14px;
-      font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;
-      letter-spacing:.25px;font-weight:900;font-size:18px;color:rgba(226,193,123,.92);
-      text-shadow:0 12px 40px rgba(0,0,0,.55);
-    }
-    .thumbWrap{position:relative}
-    .cardBody{padding:14px 14px 16px}
-    .cardBody h4{margin:0 0 6px}
-    .cardBody p{margin:0 0 12px;color:#c9d3e5;line-height:1.6;font-size:14px}
-    .pills{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
-    .pill{font-size:12px;border:1px solid rgba(200,163,95,.26);background:rgba(11,18,32,.45);color:#e7d8b3;padding:6px 10px;border-radius:999px}
+    .founderCard{padding:14px;display:grid;grid-template-columns:140px 1fr;gap:14px;align-items:center}
+    .founderImg{width:100%;border-radius:22px;border:1px solid rgba(200,163,95,.22);object-fit:cover;aspect-ratio:3/4;background:rgba(11,18,32,.55)}
+    .founderName{margin:0;font-weight:900;letter-spacing:.2px}
+    .founderRole{margin:4px 0 10px;color:var(--muted);font-size:13px}
+    .founderBio{margin:0;color:#c9d3e5;line-height:1.75;font-size:14px}
 
-    /* Stats */
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .stat{border-radius:18px;border:1px solid rgba(200,163,95,.22);background:rgba(15,26,47,.55);padding:14px}
-    .stat .num{font-size:28px;font-weight:900;color:white;letter-spacing:.3px}
-    .stat .lbl{color:#c9d3e5;font-size:13px;margin-top:4px;line-height:1.4}
+    /* SECTIONS */
+    .section{padding:26px 0 70px}
+    .sectionTitle{margin:0 0 8px;font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px;font-weight:900;font-size:clamp(24px,3vw,34px)}
+    .sectionLead{margin:0;color:#c9d3e5;line-height:1.85}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+    .miniCard{padding:14px}
+    .miniCard strong{display:block}
+    .miniCard p{margin:8px 0 0;color:#c9d3e5;line-height:1.75}
+    .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(200,163,95,.22);background:rgba(11,18,32,.45);color:#e7d8b3;padding:8px 10px;border-radius:999px;font-size:12px}
 
-    /* Modal + toast */
-    .modalBackdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:22px;z-index:90}
-    .modalBackdrop.open{display:flex}
-    .modal{width:min(980px,100%);border-radius:22px;border:1px solid rgba(200,163,95,.25);background:rgba(15,26,47,.92);box-shadow:var(--shadow);overflow:hidden}
-    .modalHeader{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid rgba(200,163,95,.18)}
-    .modalHeader strong{font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px}
-    .modalBody{padding:14px}
-    .videoBox{border-radius:18px;overflow:hidden;border:1px solid rgba(200,163,95,.18);background:rgba(11,18,32,.55)}
-    .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);padding:12px 14px;border-radius:16px;background:rgba(15,26,47,.90);border:1px solid rgba(200,163,95,.25);box-shadow:0 18px 60px rgba(0,0,0,.45);color:#e7edf7;z-index:95;max-width:min(720px, calc(100% - 24px));display:none}
-    .toast.show{display:block}
+    /* Production tiles */
+    .tile{padding:14px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform .15s ease, border-color .15s ease}
+    .tile:hover{transform:translateY(-2px);border-color:rgba(226,193,123,.55)}
+    .tileTop{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid rgba(200,163,95,.16);padding-bottom:10px}
+    .tileDesc{color:#c9d3e5;line-height:1.75;margin:0}
+    .arrow{opacity:.85}
 
-    /* Animations */
-    .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease, transform .7s ease}
-    .reveal.visible{opacity:1;transform:none}
+    /* Motion: reveal */
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease, transform .7s ease}
+    .reveal.in{opacity:1;transform:none}
 
-    /* Responsive */
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:28px 0 34px;background:linear-gradient(180deg, rgba(11,18,32,.45), rgba(11,18,32,.85))}
+    .footerGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;align-items:start}
+    .muted{color:var(--muted);font-size:13px;line-height:1.7}
+
     @media (max-width: 980px){
       .heroGrid{grid-template-columns:1fr}
-      .navLinks{display:none}
-      .mobileOnly{display:grid}
+      .founderCard{grid-template-columns:1fr}
       .grid3{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr 1fr}
-      .formGrid{grid-template-columns:1fr !important}
-      .videoGrid{grid-template-columns:1fr !important}
+      .footerGrid{grid-template-columns:1fr}
     }
   </style>
 </head>
-
 <body>
-  <div id="progress" class="progress"></div>
 
-  <!-- NAV -->
-  <div class="navWrap">
+  <div class="nav">
     <div class="container">
-      <div class="nav">
-        <a class="brand" href="#top" data-scroll="top">
+      <div class="navInner">
+        <a class="brand" href="#top" aria-label="Home">
           <div class="logo">IMI</div>
-          <div class="brandTitle">
-            <strong>Inside of Mental Injustice</strong>
-            <span>Media • Production • Advocacy</span>
+          <div style="line-height:1.05">
+            <strong style="display:block;font-family:ui-serif,Georgia,Cambria,'Times New Roman',Times,serif;letter-spacing:.35px">Inside of Mental Injustice</strong>
+            <span class="muted">Survivor-led Media • Production • Advocacy</span>
           </div>
         </a>
 
-        <nav class="navLinks" aria-label="Primary navigation">
-          <a href="#productions" data-scroll="productions">Productions</a>
-          <a href="#platform" data-scroll="platform">Story Platform</a>
-          <a href="#impact" data-scroll="impact">Impact</a>
-          <a href="#mission" data-scroll="mission">Mission</a>
-          <a href="#contact" data-scroll="contact">Contact</a>
-        </nav>
-
-        <div class="navActions">
-          <button class="btn" type="button" data-open-trailer>▶ Watch Trailer</button>
-          <button class="btn btnPrimary" type="button" data-scroll="platform">Share Your Story</button>
-          <button class="iconBtn mobileOnly" id="mobileBtn" aria-label="Open menu">☰</button>
-        </div>
-      </div>
-
-      <div class="nav" id="mobilePanel" style="display:none;margin-top:10px">
-        <div style="width:100%">
-          <a style="display:block;padding:10px 12px;border-radius:14px" href="#productions" data-scroll="productions">Productions</a>
-          <a style="display:block;padding:10px 12px;border-radius:14px" href="#platform" data-scroll="platform">Story Platform</a>
-          <a style="display:block;padding:10px 12px;border-radius:14px" href="#impact" data-scroll="impact">Impact</a>
-          <a style="display:block;padding:10px 12px;border-radius:14px" href="#mission" data-scroll="mission">Mission</a>
-          <a style="display:block;padding:10px 12px;border-radius:14px" href="#contact" data-scroll="contact">Contact</a>
+        <!-- TOP TABS: Videos / Images / Articles -->
+        <div class="links" aria-label="Top navigation">
+          <a class="chipLink" href="videos.html">Videos</a>
+          <a class="chipLink" href="images.html">Images</a>
+          <a class="chipLink" href="articles.html">Articles</a>
+          <a class="chipLink" href="documentaries.html">Documentaries</a>
+          <a class="chipLink" href="podcasts.html">Podcasts</a>
+          <a class="chipLink" href="investigations.html">Investigations</a>
+          <a class="btn btnPrimary" href="#contact">Contact</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- HERO -->
-  <section id="top" class="hero">
-    <div class="container">
-      <div class="heroGrid">
-        <div class="reveal">
-          <div class="kicker">
-            <span class="badge">Survivor-led content</span>
-            <span class="badge">Mental health justice</span>
-            <span class="badge">Media & production</span>
-          </div>
-          <h1 class="h1">Inside of Mental Injustice</h1>
-          <p class="sub" style="font-family:ui-serif,Georgia,Cambria,'Times New Roman',Times,serif;font-size:20px;letter-spacing:.2px">
-            A voice for the wrongly incarcerated — and a platform for people impacted by incarceration and mental illness.
-          </p>
-          <p class="sub">
-            IMI is a for-profit social impact media and production company producing powerful, survivor-led content that exposes mental health injustice, mass incarceration, and systemic institutional failures—while offering pathways toward accountability, healing, and reform.
-          </p>
-          <div class="ctaRow">
-            <button class="btn btnPrimary" type="button" data-scroll="productions">Explore Productions</button>
-            <button class="btn" type="button" data-open-trailer>Watch Trailer</button>
-            <button class="btn" type="button" data-scroll="platform">Share Your Story</button>
-          </div>
+  <header id="top" class="hero">
+    <div class="parallaxA" aria-hidden="true"></div>
+    <div class="parallaxB" aria-hidden="true"></div>
 
-          <div class="divider"></div>
-          <div class="stats">
-            <div class="stat reveal"><div class="num" data-num="33">0</div><div class="lbl">Years incarcerated survived</div></div>
-            <div class="stat reveal"><div class="num" data-num="20">0</div><div class="lbl">Years in solitary confinement</div></div>
-            <div class="stat reveal"><div class="num" data-num="50000000">0</div><div class="lbl">Digital media views (goal)</div></div>
-            <div class="stat reveal"><div class="num" data-num="400000">0</div><div class="lbl">Advocacy community (goal)</div></div>
-          </div>
-        </div>
-
-        <!-- Founder image (ONLY once, top section) -->
-        <aside class="founderCard reveal">
-          <img class="founderImg" src="images/founder.png" alt="Harold Cunningham — Founder & Executive Producer" />
-          <div class="founderBody">
-            <h3>Harold Cunningham</h3>
-            <p>Founder & Executive Producer. Survivor-led storytelling designed to turn testimony into accountability.</p>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTIONS -->
-  <section id="productions" class="section sectionAlt">
-    <div class="container">
-      <div class="reveal">
-        <h2 class="sectionTitle">Powerful Survivor-Led Content</h2>
-        <p class="sectionLead">IMI produces media built for modern distribution: film, streaming, podcasts, short-form, and live/virtual productions.</p>
-      </div>
-
-      <div class="grid3">
-        <article class="card reveal">
-          <div class="thumbWrap">
-            <div class="thumb" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22%3E%3Cdefs%3E%3CradialGradient id=%22a%22 cx=%2265%25%22 cy=%2235%25%22 r=%2275%25%22%3E%3Cstop offset=%220%22 stop-color=%22%23e2c17b%22 stop-opacity=%22.30%22/%3E%3Cstop offset=%221%22 stop-color=%22%230b1220%22 stop-opacity=%220%22/%3E%3C/radialGradient%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.85%22 numOctaves=%223%22/%3E%3C/filter%3E%3C/defs%3E%3Crect width=%22800%22 height=%22450%22 fill=%22%230f1a2f%22/%3E%3Cpath d=%22M0 340 C 160 260, 310 420, 470 320 S 670 350, 800 270 L 800 450 L 0 450 Z%22 fill=%22%231a2438%22 opacity=%22.75%22/%3E%3Ccircle cx=%22590%22 cy=%22160%22 r=%2280%22 fill=%22url(%23a)%22/%3E%3Crect width=%22800%22 height=%22450%22 filter=%22url(%23n)%22 opacity=%22.12%22/%3E%3Cpath d=%22M120 280 h220 a18 18 0 0 1 18 18 v40 a18 18 0 0 1-18 18 H120 a18 18 0 0 1-18-18 v-40 a18 18 0 0 1 18-18 z%22 fill=%22%230b1220%22 opacity=%22.65%22/%3E%3Cpath d=%22M160 260 l40-60 h80 l40 60 z%22 fill=%22%230b1220%22 opacity=%22.55%22/%3E%3C/svg%3E');"></div>
-            <div class="thumbLabel">Documentaries</div>
-          </div>
-          <div class="cardBody">
-            <h4>Documentaries</h4>
-            <div class="pills"><span class="pill">Cinematic</span><span class="pill">Investigative</span><span class="pill">Broadcast-ready</span></div>
-            <p>Feature and short documentaries that center lived experience, evidence, and accountability—crafted for festivals, streaming, and institutions.</p>
-            <button class="btn" type="button" data-demo="Connect this to your Documentary hub.">View Documentary Hub →</button>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <div class="thumbWrap">
-            <div class="thumb" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22%3E%3Cdefs%3E%3CradialGradient id=%22a%22 cx=%2260%25%22 cy=%2230%25%22 r=%2275%25%22%3E%3Cstop offset=%220%22 stop-color=%22%23e2c17b%22 stop-opacity=%22.28%22/%3E%3Cstop offset=%221%22 stop-color=%22%230b1220%22 stop-opacity=%220%22/%3E%3C/radialGradient%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.9%22 numOctaves=%223%22/%3E%3C/filter%3E%3C/defs%3E%3Crect width=%22800%22 height=%22450%22 fill=%22%230f1a2f%22/%3E%3Cpath d=%22M0 360 C 190 280, 330 440, 520 330 S 690 360, 800 285 L 800 450 L 0 450 Z%22 fill=%22%231a2438%22 opacity=%22.80%22/%3E%3Ccircle cx=%22580%22 cy=%22150%22 r=%2290%22 fill=%22url(%23a)%22/%3E%3Crect width=%22800%22 height=%22450%22 filter=%22url(%23n)%22 opacity=%22.12%22/%3E%3Cpath d=%22M370 130 a50 50 0 1 0 0.1 0 z%22 fill=%22%230b1220%22 opacity=%22.62%22/%3E%3Crect x=%22355%22 y=%22170%22 width=%2290%22 height=%22170%22 rx=%2228%22 fill=%22%230b1220%22 opacity=%22.62%22/%3E%3Crect x=%22330%22 y=%22210%22 width=%22140%22 height=%2280%22 rx=%2240%22 fill=%22%230b1220%22 opacity=%22.55%22/%3E%3C/svg%3E');"></div>
-            <div class="thumbLabel">Podcasts</div>
-          </div>
-          <div class="cardBody">
-            <h4>Podcasts</h4>
-            <div class="pills"><span class="pill">Series format</span><span class="pill">Interview-led</span><span class="pill">Spotify/Apple</span></div>
-            <p>Raw truth + expert context. A media engine built for reach—long-form listening and short-form clips for social distribution.</p>
-            <button class="btn" type="button" data-demo="Connect this to your podcast feed/player.">Open Podcast Studio →</button>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <div class="thumbWrap">
-            <div class="thumb" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22%3E%3Cdefs%3E%3CradialGradient id=%22a%22 cx=%2266%25%22 cy=%2232%25%22 r=%2275%25%22%3E%3Cstop offset=%220%22 stop-color=%22%23e2c17b%22 stop-opacity=%22.30%22/%3E%3Cstop offset=%221%22 stop-color=%22%230b1220%22 stop-opacity=%220%22/%3E%3C/radialGradient%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.85%22 numOctaves=%223%22/%3E%3C/filter%3E%3C/defs%3E%3Crect width=%22800%22 height=%22450%22 fill=%22%230f1a2f%22/%3E%3Cpath d=%22M0 350 C 210 265, 360 440, 560 330 S 710 360, 800 285 L 800 450 L 0 450 Z%22 fill=%22%231a2438%22 opacity=%22.78%22/%3E%3Ccircle cx=%22595%22 cy=%22155%22 r=%2288%22 fill=%22url(%23a)%22/%3E%3Crect width=%22800%22 height=%22450%22 filter=%22url(%23n)%22 opacity=%22.12%22/%3E%3Cpath d=%22M420 170 a55 55 0 1 0 0.1 0 z%22 fill=%22%230b1220%22 opacity=%22.58%22/%3E%3Cpath d=%22M455 215 l70 70%22 stroke=%22%230b1220%22 stroke-width=%2226%22 stroke-linecap=%22round%22 opacity=%22.55%22/%3E%3Cpath d=%22M360 285 h120%22 stroke=%22%230b1220%22 stroke-width=%2224%22 stroke-linecap=%22round%22 opacity=%22.42%22/%3E%3C/svg%3E');"></div>
-            <div class="thumbLabel">Investigations</div>
-          </div>
-          <div class="cardBody">
-            <h4>Investigations & Advocacy Campaigns</h4>
-            <div class="pills"><span class="pill">Public impact</span><span class="pill">Accountability</span><span class="pill">Policy-ready</span></div>
-            <p>Evidence-driven storytelling and campaigns that amplify survivors, pressure systems, and move institutions toward reform.</p>
-            <button class="btn" type="button" data-demo="Connect this to your Campaigns page.">View Campaigns →</button>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- STORY PLATFORM -->
-  <section id="platform" class="section">
-    <div class="container">
-      <div class="reveal">
-        <h2 class="sectionTitle">Storytelling Platform</h2>
-        <p class="sectionLead">A secure, survivor-first pathway for formerly and currently incarcerated people to share stories—written, audio, or video—with consent-first publishing.</p>
-      </div>
-
-      <div class="panel reveal">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="formGrid">
-          <div>
-            <h3 style="margin:0 0 8px;font-family:ui-serif,Georgia,Cambria,'Times New Roman',Times,serif;letter-spacing:.35px">Submission Standards</h3>
-            <ul style="margin:0;padding-left:18px;color:#c9d3e5;line-height:1.9">
-              <li>Trauma-informed storytelling and dignity-first editing</li>
-              <li>Anonymous option (alias allowed)</li>
-              <li>Consent-first publishing and controlled release</li>
-              <li>No doxxing or identifying private information</li>
-            </ul>
-            <div class="divider"></div>
-            <button class="btn" type="button" data-demo="Connect this form to Netlify Forms / admin review workflow.">Enable Secure Intake →</button>
-          </div>
-
-          <form id="storyForm" name="story" method="POST" data-netlify="true">
-            <input type="hidden" name="form-name" value="story" />
-            <label style="display:block;margin:8px 0 6px;color:#d8e0ee;font-size:13px">Name / Alias *</label>
-            <input name="name" required style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(200,163,95,.22);background:rgba(11,18,32,.55);color:#e7edf7" placeholder="Your name or alias" />
-
-            <label style="display:block;margin:10px 0 6px;color:#d8e0ee;font-size:13px">Contact (email/phone) *</label>
-            <input name="contact" required style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(200,163,95,.22);background:rgba(11,18,32,.55);color:#e7edf7" placeholder="So IMI can follow up" />
-
-            <label style="display:block;margin:10px 0 6px;color:#d8e0ee;font-size:13px">Format *</label>
-            <select name="format" required style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(200,163,95,.22);background:rgba(11,18,32,.55);color:#e7edf7">
-              <option value="" disabled selected>Select one…</option>
-              <option>Written testimony</option>
-              <option>Audio testimony (upload link later)</option>
-              <option>Video testimony (upload link later)</option>
-            </select>
-
-            <label style="display:block;margin:10px 0 6px;color:#d8e0ee;font-size:13px">Your Story *</label>
-            <textarea name="message" required style="width:100%;min-height:140px;resize:vertical;padding:12px;border-radius:14px;border:1px solid rgba(200,163,95,.22);background:rgba(11,18,32,.55);color:#e7edf7" placeholder="Share what happened, what you witnessed, or what you survived…"></textarea>
-
-            <label style="display:block;margin:10px 0 6px;color:#d8e0ee;font-size:13px">Consent</label>
-            <select name="consent" style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(200,163,95,.22);background:rgba(11,18,32,.55);color:#e7edf7">
-              <option>Contact me before publishing</option>
-              <option>I consent to publishing with my alias</option>
-              <option>Internal use only (research/advocacy)</option>
-            </select>
-
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-              <button class="btn btnPrimary" type="submit">Submit Story</button>
-              <button class="btn" type="button" id="clearDraft">Clear Draft</button>
-            </div>
-            <p style="margin:10px 0 0;color:#b7c3d7;font-size:12px;line-height:1.5">
-              On Netlify deployment, this form will appear in your Netlify dashboard → Forms.
+    <div class="container heroInner">
+      <div class="banner" id="banner">
+        <div class="heroGrid">
+          <div class="card" style="padding:18px">
+            <span class="badge">New: Mobile-first redesign + improved motion</span>
+            <h1 id="heroTitle">Inside of Mental Injustice</h1>
+            <p class="lead" id="heroSubtitle">
+              Documentaries, podcasts, investigations, and advocacy campaigns led by lived experience — built to move hearts, change policy, and protect lives.
             </p>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- IMPACT -->
-  <section id="impact" class="section sectionAlt">
-    <div class="container">
-      <div class="reveal">
-        <h2 class="sectionTitle">Impact & Accountability</h2>
-        <p class="sectionLead">A media engine built to reach audiences, influence institutions, and amplify survivor testimony into reform.</p>
-      </div>
+            <div class="kpis">
+              <div class="kpi">
+                <b>Documentaries</b>
+                <span>Festival, streaming, impact screenings</span>
+              </div>
+              <div class="kpi">
+                <b>Podcasts</b>
+                <span>Interview-led series + social clips</span>
+              </div>
+              <div class="kpi">
+                <b>Investigations</b>
+                <span>Evidence-driven accountability work</span>
+              </div>
+            </div>
 
-      <div class="stats">
-        <div class="stat reveal"><div class="num" data-num="1000">0</div><div class="lbl">Stories amplified (target)</div></div>
-        <div class="stat reveal"><div class="num" data-num="250000">0</div><div class="lbl">Audience reach (target)</div></div>
-        <div class="stat reveal"><div class="num" data-num="50">0</div><div class="lbl">Partnership targets</div></div>
-        <div class="stat reveal"><div class="num" data-num="25">0</div><div class="lbl">Policy conversations</div></div>
-      </div>
-    </div>
-  </section>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+              <a class="btn btnPrimary" href="videos.html">Watch</a>
+              <a class="btn" href="articles.html">Read</a>
+              <a class="btn" href="#productions">Explore Productions</a>
+            </div>
+          </div>
 
-  <!-- MISSION -->
-  <section id="mission" class="section">
-    <div class="container">
-      <div class="reveal">
-        <h2 class="sectionTitle">Our Mission</h2>
-        <p class="sectionLead" style="font-family:ui-serif,Georgia,Cambria,'Times New Roman',Times,serif;font-size:18px;max-width:78ch">
-          Transforming lived experience into media that inspires accountability.
-        </p>
-      </div>
-
-      <div class="panel reveal">
-        <p style="margin:0;color:#c9d3e5;line-height:1.8">
-          IMI exists to tell the stories the system tried to bury—stories that expose psychological harm, institutional neglect, and systemic injustice.
-          We produce survivor-led media that is commercially viable, culturally necessary, and strategically designed to move policy, shift public opinion,
-          and protect human dignity.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <div class="container">
-      <div class="reveal">
-        <h2 class="sectionTitle">Contact</h2>
-        <p class="sectionLead">For collaborations, productions, distribution, and partnerships:</p>
-      </div>
-      <div class="panel reveal" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-        <div>
-          <div style="font-weight:900;letter-spacing:.2px">Email</div>
-          <div style="color:#e7d8b3">hcunningham2025@outlook.com</div>
-          <div style="margin-top:8px;color:#b7c3d7;font-size:13px">Virtual Mailbox: (add address after setup)</div>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn" type="button" data-demo="Add your real social links here.">YouTube</button>
-          <button class="btn" type="button" data-demo="Add your real social links here.">Instagram</button>
-          <button class="btn" type="button" data-demo="Add your real social links here.">TikTok</button>
-          <button class="btn btnPrimary" type="button" data-open-trailer>Trailer</button>
-        </div>
-      </div>
-      <div style="margin-top:14px;color:#b7c3d7;font-size:13px" class="reveal">© <span id="year"></span> Inside of Mental Injustice (IMI). All rights reserved.</div>
-    </div>
-  </section>
-
-  <!-- Trailer Modal -->
-  <div id="trailerModal" class="modalBackdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-label="IMI Trailer">
-      <div class="modalHeader">
-        <strong>IMI Trailer</strong>
-        <button class="iconBtn" id="closeTrailer" aria-label="Close">✕</button>
-      </div>
-      <div class="modalBody">
-        <div class="videoBox">
-          <div style="padding:14px;color:#d7e0ef;line-height:1.6">
-            Trailer placeholder. When you have a YouTube/Vimeo link, I’ll swap this with a real embed.
+          <div class="card founderCard">
+            <img class="founderImg" id="founderImg" alt="Harold Cunningham — Founder" src="images/founder.png"
+                 onerror="this.onerror=null;this.src='images/founder.png';" />
+            <div>
+              <div class="founderName" id="founderName">Harold Cunningham</div>
+              <div class="founderRole" id="founderRole">Founder • Survivor-led storyteller • Mental health advocate</div>
+              <p class="founderBio" id="founderBio">
+                IMI centers lived experience to tell the truth about solitary confinement, mental illness behind bars, and institutional harm — and to build pathways to healing and reform.
+              </p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+                <a class="btn" href="documentaries.html">Documentaries</a>
+                              </div>
+              <div class="muted" style="margin-top:10px">Admin link is also in the footer.</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </header>
 
-  <div id="toast" class="toast"><span id="toastMsg"></span></div>
+  <main>
+
+    <section id="productions" class="section">
+      <div class="container">
+        <div class="reveal">
+          <h2 class="sectionTitle">Productions</h2>
+          <p class="sectionLead">Responsive, mobile-first production hubs. Each section can be managed separately in Admin.</p>
+        </div>
+
+        <div class="grid3">
+          <div class="card tile reveal" onclick="location.href='documentaries.html'">
+            <div class="tileTop">
+              <strong>Documentaries</strong>
+              <span class="badge">View →</span>
+            </div>
+            <p class="tileDesc">Feature and short films designed for impact: festivals, streaming, and institutional accountability.</p>
+            <span class="muted arrow">Open documentaries page</span>
+          </div>
+
+          <div class="card tile reveal" onclick="location.href='podcasts.html'">
+            <div class="tileTop">
+              <strong>Podcasts</strong>
+              <span class="badge">Listen →</span>
+            </div>
+            <p class="tileDesc">Series content with interviews, narrative episodes, and repurposed clips for social distribution.</p>
+            <span class="muted arrow">Open podcasts page</span>
+          </div>
+
+          <div class="card tile reveal" onclick="location.href='investigations.html'">
+            <div class="tileTop">
+              <strong>Investigations</strong>
+              <span class="badge">Explore →</span>
+            </div>
+            <p class="tileDesc">Evidence-driven investigations and advocacy campaigns built to protect families and drive reform.</p>
+            <span class="muted arrow">Open investigations page</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section" style="padding-top:0">
+      <div class="container">
+        <div class="card miniCard reveal">
+          <span class="badge">Mission</span>
+          <h2 class="sectionTitle" style="margin-top:10px">Survivor-led storytelling that leads to change</h2>
+          <p class="sectionLead" id="aboutText">
+            IMI uses film, audio, and investigative media to expose harm, elevate truth, and support system-level reform — while creating training and work pathways for returning citizens.
+          </p>
+        </div>
+
+        <div class="grid3" style="margin-top:14px">
+          <div class="card miniCard reveal">
+            <strong>Mobile UX first</strong>
+            <p>Thumb-friendly navigation, readable typography, responsive layouts, and motion that feels premium — not distracting.</p>
+          </div>
+          <div class="card miniCard reveal">
+            <strong>High-trust content</strong>
+            <p>Source-based reporting, survivor testimony, and responsible storytelling that protects people and preserves truth.</p>
+          </div>
+          <div class="card miniCard reveal">
+            <strong>Production ready</strong>
+            <p>Sections designed to scale with real hosting (YouTube/Vimeo/Cloud storage) and future CMS integration.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section" style="padding-top:0">
+      <div class="container">
+        <div class="card miniCard reveal">
+          <h2 class="sectionTitle">Contact</h2>
+          <p class="sectionLead">Press inquiries, partnerships, screening requests, and community collaborations.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+            <a class="btn btnPrimary" id="contactEmail" href="mailto:hcunningham2025@outlook.com">Email</a>
+            <a class="btn" href="videos.html">Watch</a>
+            <a class="btn" href="articles.html">Read</a>
+          </div>
+          <div class="muted" style="margin-top:10px">Tip: You can update the hero, about, and contact settings in Admin.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footerGrid">
+        <div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <div class="logo">IMI</div>
+            <div>
+              <div style="font-weight:900;letter-spacing:.2px">Inside of Mental Injustice</div>
+              <div class="muted">© <span id="year"></span> • All rights reserved</div>
+            </div>
+          </div>
+          <div class="muted" style="margin-top:10px">
+            Founder image file: <code>/images/founder.png</code> — replace that file with your real photo (same name) to update everywhere.
+          </div>
+        </div>
+
+        <div>
+          <div style="font-weight:900;letter-spacing:.2px;margin-bottom:10px">Site Admin</div>
+          <div class="muted">Manage the entire website content (demo mode). For production security we can upgrade to Netlify Identity.</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+            <a class="btn btnPrimary" href="admin/login.html">Open Admin</a>
+            <a class="btn" href="documentaries.html">Productions</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script>
-    // Year
+    // YEAR
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Progress bar
-    const bar = document.getElementById('progress');
-    function onScroll(){
-      const doc = document.documentElement;
-      const total = doc.scrollHeight - doc.clientHeight;
-      const y = doc.scrollTop || document.body.scrollTop;
-      const pct = total>0 ? (y/total)*100 : 0;
-      bar.style.width = pct + '%';
-    }
-    window.addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
+    // PAGE LOAD banner animation
+    const banner = document.getElementById('banner');
+    window.addEventListener('load', ()=>{ if(banner) banner.classList.add('loaded'); });
 
-    // Smooth scroll with offset (fix “Mission covered”)
-    function scrollToId(id){
-      const el = document.getElementById(id);
-      if(!el) return;
-      const y = el.getBoundingClientRect().top + window.scrollY - 96;
-      window.scrollTo({top:y, behavior:'smooth'});
+    // PARALLAX
+    const a = document.querySelector('.parallaxA');
+    const b = document.querySelector('.parallaxB');
+    function parallax(){
+      const y = window.scrollY || 0;
+      if(a) a.style.transform = `translate3d(0, ${y*0.14}px, 0)`;
+      if(b) b.style.transform = `translate3d(0, ${y*0.08}px, 0)`;
     }
-    const mobilePanel = document.getElementById('mobilePanel');
-    document.querySelectorAll('[data-scroll]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        e.preventDefault();
-        scrollToId(a.getAttribute('data-scroll'));
-        if(mobilePanel) mobilePanel.style.display = 'none';
-      });
-    });
+    window.addEventListener('scroll', parallax, {passive:true});
+    parallax();
 
-    // Mobile menu
-    const mobileBtn = document.getElementById('mobileBtn');
-    if(mobileBtn){
-      mobileBtn.addEventListener('click', ()=>{
-        mobilePanel.style.display = (mobilePanel.style.display==='block') ? 'none' : 'block';
-      });
-    }
-
-    // Reveal
-    const reveals = Array.from(document.querySelectorAll('.reveal'));
+    // REVEAL motion
+    const els = Array.from(document.querySelectorAll('.reveal'));
     const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-    }, {threshold:0.12});
-    reveals.forEach(el=>io.observe(el));
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      })
+    }, {threshold:0.14});
+    els.forEach(el=>io.observe(el));
 
-    // Modal
-    const modal = document.getElementById('trailerModal');
-    const close = ()=>modal.classList.remove('open');
-    document.querySelectorAll('[data-open-trailer]').forEach(b=>b.addEventListener('click', ()=>modal.classList.add('open')));
-    document.getElementById('closeTrailer').addEventListener('click', close);
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
-
-    // Toast
-    const toast = document.getElementById('toast');
-    const toastMsg = document.getElementById('toastMsg');
-    let toastTimer = 0;
-    function showToast(msg){
-      toastMsg.textContent = msg;
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(()=>toast.classList.remove('show'), 3200);
+    // SITE CONTENT (Admin-controlled)
+    const contentKey = 'imi_site_content_v1';
+    function loadContent(){
+      try{ const raw = localStorage.getItem(contentKey); return raw ? JSON.parse(raw) : null; }catch{ return null; }
     }
-    document.querySelectorAll('[data-demo]').forEach(b=>b.addEventListener('click', ()=>showToast(b.getAttribute('data-demo'))));
+    const c = loadContent();
+    if(c){
+      if(c.heroTitle) document.getElementById('heroTitle').textContent = c.heroTitle;
+      if(c.heroSubtitle) document.getElementById('heroSubtitle').textContent = c.heroSubtitle;
+      if(c.aboutText) document.getElementById('aboutText').textContent = c.aboutText;
 
-    // Animated numbers
-    function animateNumber(el, to, duration=1100){
-      const start = performance.now();
-      const ease = (t)=> 1 - Math.pow(1-t, 3);
-      function tick(now){
-        const p = Math.max(0, Math.min(1, (now-start)/duration));
-        const cur = Math.round((to)*ease(p));
-        el.textContent = cur.toLocaleString();
-        if(p<1) requestAnimationFrame(tick);
+      if(c.founderName) document.getElementById('founderName').textContent = c.founderName;
+      if(c.founderRole) document.getElementById('founderRole').textContent = c.founderRole;
+      if(c.founderBio) document.getElementById('founderBio').textContent = c.founderBio;
+
+      if(c.founderImgUrl){
+        const img = document.getElementById('founderImg');
+        img.src = c.founderImgUrl;
+        img.onerror = ()=>{ img.src='images/founder.png'; };
       }
-      requestAnimationFrame(tick);
-    }
-    document.querySelectorAll('[data-num]').forEach(el=>{
-      const to = parseInt(el.getAttribute('data-num'), 10);
-      animateNumber(el, isNaN(to)?0:to);
-    });
 
-    // Story draft convenience
-    const form = document.getElementById('storyForm');
-    const clearDraft = document.getElementById('clearDraft');
-    const draftKey = 'imi_story_draft';
-    function loadDraft(){ try{ return JSON.parse(localStorage.getItem(draftKey)||'{}'); }catch{return {}} }
-    function saveDraft(data){ localStorage.setItem(draftKey, JSON.stringify(data)); }
-    const fields = ['name','contact','format','message','consent'];
-    const draft = loadDraft();
-    fields.forEach(k=>{
-      const el = form.querySelector(`[name="${k}"]`);
-      if(el && draft[k]) el.value = draft[k];
-      if(el) el.addEventListener('input', ()=>{ const d=loadDraft(); d[k]=el.value; saveDraft(d); });
-    });
-    clearDraft.addEventListener('click', ()=>{ localStorage.removeItem(draftKey); form.reset(); showToast('Draft cleared.'); });
+      if(c.contactEmail){
+        const a = document.getElementById('contactEmail');
+        a.href = `mailto:${c.contactEmail}`;
+        a.textContent = c.contactEmail;
+      }
+    }
   </script>
 </body>
 </html>
