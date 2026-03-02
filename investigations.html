@@ -118,5 +118,21 @@
     render();
     window.addEventListener('storage', (e)=>{ if(e.key===storeKey) render(); });
   </script>
+
+<footer style="padding:28px 0;border-top:1px solid rgba(200,163,95,.22);background:rgba(15,26,47,.35)">
+  <div style="max-width:1180px;margin:0 auto;padding:0 18px;color:#b9c4d8;font-size:14px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+    <div>© <span id="year"></span> Inside of Mental Injustice (IMI). All rights reserved.</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="https://x.com" target="_blank" rel="noopener">X</a>
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
+      <a href="/admin/" style="color:#e2c17b;text-decoration:underline">Admin</a>
+    </div>
+  </div>
+  <script>document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());</script>
+</footer>
+
 </body>
 </html>
