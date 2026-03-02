@@ -2,16 +2,15 @@ backend:
   name: git-gateway
   branch: main
 
-# Uploads (drag & drop)
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
   - name: "library"
-    label: "Media Library"
+    label: "IMI Content"
     files:
       - name: "libraryjson"
-        label: "Videos • Images • Articles"
+        label: "All Content"
         file: "content/library.json"
         format: "json"
         fields:
@@ -20,30 +19,9 @@ collections:
             widget: "list"
             summary: "{{fields.type}} — {{fields.title}}"
             fields:
-              - { label: "Type", name: "type", widget: "select", options: ["videos","images","articles"] }
+              - { label: "Type", name: "type", widget: "select", options: ["videos","images","articles","documentaries","investigations","podcasts"] }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Date", name: "date", widget: "datetime", required: false }
               - { label: "Description", name: "description", widget: "text", required: false }
-              - { label: "URL (link to video/image/article)", name: "url", widget: "string", required: false }
-              - { label: "Embed URL (videos only)", name: "embed", widget: "string", required: false, hint: "Use an embeddable URL (YouTube embed, Facebook plugin URL, Instagram /embed, Vimeo embed)." }
-              - { label: "Thumbnail (upload or drag-drop)", name: "thumbnail", widget: "image", required: false }
-  - name: "settings"
-    label: "Site Settings"
-    files:
-      - name: "settingsjson"
-        label: "Contact • Social • Address"
-        file: "content/settings.json"
-        format: "json"
-        fields:
-          - { label: "Site Title", name: "siteTitle", widget: "string" }
-          - { label: "Contact Email", name: "contactEmail", widget: "string" }
-          - { label: "Virtual Mailbox Address", name: "virtualMailbox", widget: "string", required: false }
-          - label: "Social Links"
-            name: "social"
-            widget: "object"
-            fields:
-              - { label: "X", name: "x", widget: "string", required: false }
-              - { label: "Instagram", name: "instagram", widget: "string", required: false }
-              - { label: "Facebook", name: "facebook", widget: "string", required: false }
-              - { label: "TikTok", name: "tiktok", widget: "string", required: false }
-              - { label: "YouTube", name: "youtube", widget: "string", required: false }
+              - { label: "URL", name: "url", widget: "string", required: false }
+              - { label: "Embed URL", name: "embed", widget: "string", required: false }
+              - { label: "Thumbnail", name: "thumbnail", widget: "image", required: false }
