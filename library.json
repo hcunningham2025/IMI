@@ -1,3 +1,12 @@
 {
-  "items": []
+  "items": [
+    {
+      "type": "videos",
+      "title": "NBC Washington Video",
+      "url": "https://www.facebook.com/nbcwashington/videos/special-dinner-held-for-incarcerated-residents-and-their-families/712451468116678/",
+      "embed": "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fnbcwashington%2Fvideos%2Fspecial-dinner-held-for-incarcerated-residents-and-their-families%2F712451468116678%2F&show_text=false&width=560",
+      "description": "NBC Washington segment highlighting family connection",
+      "thumbnail": ""
+    }
+  ]
 }

@@ -1,371 +1,70 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Inside of Mental Injustice</title>
-  <meta name="description" content="Inside of Mental Injustice (IMI) — survivor-led media production: documentaries, podcasts, investigations, and advocacy campaigns." />
-  <style>
-    :root{
-      --bg:#0b1220; --bg2:#0f1a2f; --panel:rgba(15,26,47,.58);
-      --gold:#c8a35f; --gold2:#e2c17b;
-      --text:#e9eef8; --muted:#b7c3d7;
-      --border:rgba(200,163,95,.22);
-      --shadow: 0 0 0 1px rgba(200,163,95,.18), 0 22px 70px rgba(0,0,0,.55);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1180px;margin:0 auto;padding:0 18px}
-    .nav{
-      position:sticky; top:0; z-index:50;
-      background:linear-gradient(180deg, rgba(11,18,32,.92), rgba(11,18,32,.70));
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--border);
-    }
-    .navInner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{height:40px;width:40px;border-radius:14px;display:grid;place-items:center;background:rgba(15,26,47,.85);border:1px solid var(--border);color:var(--gold2);font-weight:900;letter-spacing:.5px}
-    .links{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .chipLink{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 12px;border-radius:999px;
-      border:1px solid rgba(200,163,95,.22);
-      background:rgba(11,18,32,.45);
-      color:#dfe7f6;
-      transition:transform .15s ease, border-color .15s ease, background .15s ease;
-    }
-    .chipLink:hover{transform:translateY(-1px);border-color:rgba(226,193,123,.55);background:rgba(15,26,47,.65)}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      padding:12px 14px;border-radius:999px;
-      border:1px solid rgba(200,163,95,.35);
-      background:linear-gradient(180deg, rgba(200,163,95,.18), rgba(200,163,95,.06));
-      color:#f4e7c6; cursor:pointer;
-      transition:transform .15s ease;
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btnPrimary{background:linear-gradient(180deg, rgba(226,193,123,.96), rgba(200,163,95,.86));color:var(--bg);border-color:rgba(226,193,123,.96)}
 
-    /* HERO */
-    .hero{position:relative;overflow:hidden}
-    .parallaxA,.parallaxB{
-      position:absolute; inset:-18% -18%;
-      will-change:transform; pointer-events:none;
-    }
-    .parallaxA{background:radial-gradient(820px 520px at 55% 30%, rgba(226,193,123,.16), transparent 62%), radial-gradient(760px 460px at 20% 70%, rgba(200,163,95,.12), transparent 62%);}
-    .parallaxB{opacity:.22;mix-blend-mode:overlay;background-image:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,0)), radial-gradient(circle at 40% 40%, rgba(255,255,255,.06), transparent 55%)}
-    .heroInner{position:relative;padding:54px 0 26px}
-    .banner{
-      opacity:0; transform:translateY(18px);
-      transition:opacity .9s ease, transform .9s ease;
-    }
-    .banner.loaded{opacity:1; transform:none}
-    .heroGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:stretch}
-    h1{margin:0 0 10px;font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px;font-weight:900;font-size:clamp(34px,4.4vw,58px)}
-    .lead{margin:0;color:#c9d3e5;line-height:1.85;max-width:80ch}
-    .kpis{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-    .kpi{border-radius:18px;border:1px solid rgba(200,163,95,.18);background:rgba(15,26,47,.55);padding:12px 12px;min-width:180px}
-    .kpi b{display:block;letter-spacing:.2px}
-    .kpi span{color:var(--muted);font-size:13px;line-height:1.6}
-
-    .card{
-      border-radius:24px;border:1px solid rgba(200,163,95,.22);
-      background:rgba(15,26,47,.55);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-    .founderCard{padding:14px;display:grid;grid-template-columns:140px 1fr;gap:14px;align-items:center}
-    .founderImg{width:100%;border-radius:22px;border:1px solid rgba(200,163,95,.22);object-fit:cover;aspect-ratio:3/4;background:rgba(11,18,32,.55)}
-    .founderName{margin:0;font-weight:900;letter-spacing:.2px}
-    .founderRole{margin:4px 0 10px;color:var(--muted);font-size:13px}
-    .founderBio{margin:0;color:#c9d3e5;line-height:1.75;font-size:14px}
-
-    /* SECTIONS */
-    .section{padding:26px 0 70px}
-    .sectionTitle{margin:0 0 8px;font-family:ui-serif,Georgia,Cambria,"Times New Roman",Times,serif;letter-spacing:.35px;font-weight:900;font-size:clamp(24px,3vw,34px)}
-    .sectionLead{margin:0;color:#c9d3e5;line-height:1.85}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
-    .miniCard{padding:14px}
-    .miniCard strong{display:block}
-    .miniCard p{margin:8px 0 0;color:#c9d3e5;line-height:1.75}
-    .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(200,163,95,.22);background:rgba(11,18,32,.45);color:#e7d8b3;padding:8px 10px;border-radius:999px;font-size:12px}
-
-    /* Production tiles */
-    .tile{padding:14px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform .15s ease, border-color .15s ease}
-    .tile:hover{transform:translateY(-2px);border-color:rgba(226,193,123,.55)}
-    .tileTop{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid rgba(200,163,95,.16);padding-bottom:10px}
-    .tileDesc{color:#c9d3e5;line-height:1.75;margin:0}
-    .arrow{opacity:.85}
-
-    /* Motion: reveal */
-    .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease, transform .7s ease}
-    .reveal.in{opacity:1;transform:none}
-
-    /* FOOTER */
-    footer{border-top:1px solid var(--border);padding:28px 0 34px;background:linear-gradient(180deg, rgba(11,18,32,.45), rgba(11,18,32,.85))}
-    .footerGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;align-items:start}
-    .muted{color:var(--muted);font-size:13px;line-height:1.7}
-
-    @media (max-width: 980px){
-      .heroGrid{grid-template-columns:1fr}
-      .founderCard{grid-template-columns:1fr}
-      .grid3{grid-template-columns:1fr}
-      .footerGrid{grid-template-columns:1fr}
-    }
-  </style>
-</head>
-<body>
-
-  <div class="nav">
-    <div class="container">
-      <div class="navInner">
-        <a class="brand" href="#top" aria-label="Home">
-          <div class="logo">IMI</div>
-          <div style="line-height:1.05">
-            <strong style="display:block;font-family:ui-serif,Georgia,Cambria,'Times New Roman',Times,serif;letter-spacing:.35px">Inside of Mental Injustice</strong>
-            <span class="muted">Survivor-led Media • Production • Advocacy</span>
-          </div>
-        </a>
-
-        <!-- TOP TABS: Videos / Images / Articles -->
-        <div class="links" aria-label="Top navigation">
-          <a class="chipLink" href="videos.html">Videos</a>
-          <a class="chipLink" href="images.html">Images</a>
-          <a class="chipLink" href="articles.html">Articles</a>
-          <a class="chipLink" href="documentaries.html">Documentaries</a>
-          <a class="chipLink" href="podcasts.html">Podcasts</a>
-          <a class="chipLink" href="investigations.html">Investigations</a>
-          <a class="btn btnPrimary" href="#contact">Contact</a>
-        </div>
-      </div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IMI Admin Dashboard</title>
+<link rel="stylesheet" href="/admin/dashboard.css"/>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script></head><body>
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">IMI</div>
+      <div><div style="font-weight:900">IMI Admin</div><div class="small">Content Manager</div></div>
     </div>
-  </div>
-
-  <header id="top" class="hero">
-    <div class="parallaxA" aria-hidden="true"></div>
-    <div class="parallaxB" aria-hidden="true"></div>
-
-    <div class="container heroInner">
-      <div class="banner" id="banner">
-        <div class="heroGrid">
-          <div class="card" style="padding:18px">
-            <span class="badge">New: Mobile-first redesign + improved motion</span>
-            <h1 id="heroTitle">Inside of Mental Injustice</h1>
-            <p class="lead" id="heroSubtitle">
-              Documentaries, podcasts, investigations, and advocacy campaigns led by lived experience — built to move hearts, change policy, and protect lives.
-            </p>
-
-            <div class="kpis">
-              <div class="kpi">
-                <b>Documentaries</b>
-                <span>Festival, streaming, impact screenings</span>
-              </div>
-              <div class="kpi">
-                <b>Podcasts</b>
-                <span>Interview-led series + social clips</span>
-              </div>
-              <div class="kpi">
-                <b>Investigations</b>
-                <span>Evidence-driven accountability work</span>
-              </div>
-            </div>
-
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
-              <a class="btn btnPrimary" href="videos.html">Watch</a>
-              <a class="btn" href="articles.html">Read</a>
-              <a class="btn" href="#productions">Explore Productions</a>
-            </div>
-          </div>
-
-          <div class="card founderCard">
-            <img class="founderImg" id="founderImg" alt="Harold Cunningham — Founder" src="images/founder.png"
-                 onerror="this.onerror=null;this.src='images/founder.png';" />
-            <div>
-              <div class="founderName" id="founderName">Harold Cunningham</div>
-              <div class="founderRole" id="founderRole">Founder • Survivor-led storyteller • Mental health advocate</div>
-              <p class="founderBio" id="founderBio">
-                IMI centers lived experience to tell the truth about solitary confinement, mental illness behind bars, and institutional harm — and to build pathways to healing and reform.
-              </p>
-              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-                <a class="btn" href="documentaries.html">Documentaries</a>
-                              </div>
-              <div class="muted" style="margin-top:10px">Admin link is also in the footer.</div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="nav">
+      <a href="/admin/">Dashboard</a>
+      <a href="/admin/manage-content/">Manage Content</a>
+      <hr style="border:0;border-top:1px solid rgba(200,163,95,.18);margin:14px 0">
+      <a href="#" id="logout">Logout</a>
     </div>
-  </header>
-
-  <main>
-
-    <section id="productions" class="section">
-      <div class="container">
-        <div class="reveal">
-          <h2 class="sectionTitle">Productions</h2>
-          <p class="sectionLead">Responsive, mobile-first production hubs. Each section can be managed separately in Admin.</p>
-        </div>
-
-        <div class="grid3">
-          <div class="card tile reveal" onclick="location.href='documentaries.html'">
-            <div class="tileTop">
-              <strong>Documentaries</strong>
-              <span class="badge">View →</span>
-            </div>
-            <p class="tileDesc">Feature and short films designed for impact: festivals, streaming, and institutional accountability.</p>
-            <span class="muted arrow">Open documentaries page</span>
-          </div>
-
-          <div class="card tile reveal" onclick="location.href='podcasts.html'">
-            <div class="tileTop">
-              <strong>Podcasts</strong>
-              <span class="badge">Listen →</span>
-            </div>
-            <p class="tileDesc">Series content with interviews, narrative episodes, and repurposed clips for social distribution.</p>
-            <span class="muted arrow">Open podcasts page</span>
-          </div>
-
-          <div class="card tile reveal" onclick="location.href='investigations.html'">
-            <div class="tileTop">
-              <strong>Investigations</strong>
-              <span class="badge">Explore →</span>
-            </div>
-            <p class="tileDesc">Evidence-driven investigations and advocacy campaigns built to protect families and drive reform.</p>
-            <span class="muted arrow">Open investigations page</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="section" style="padding-top:0">
-      <div class="container">
-        <div class="card miniCard reveal">
-          <span class="badge">Mission</span>
-          <h2 class="sectionTitle" style="margin-top:10px">Survivor-led storytelling that leads to change</h2>
-          <p class="sectionLead" id="aboutText">
-            IMI uses film, audio, and investigative media to expose harm, elevate truth, and support system-level reform — while creating training and work pathways for returning citizens.
-          </p>
-        </div>
-
-        <div class="grid3" style="margin-top:14px">
-          <div class="card miniCard reveal">
-            <strong>Mobile UX first</strong>
-            <p>Thumb-friendly navigation, readable typography, responsive layouts, and motion that feels premium — not distracting.</p>
-          </div>
-          <div class="card miniCard reveal">
-            <strong>High-trust content</strong>
-            <p>Source-based reporting, survivor testimony, and responsible storytelling that protects people and preserves truth.</p>
-          </div>
-          <div class="card miniCard reveal">
-            <strong>Production ready</strong>
-            <p>Sections designed to scale with real hosting (YouTube/Vimeo/Cloud storage) and future CMS integration.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section" style="padding-top:0">
-      <div class="container">
-        <div class="card miniCard reveal">
-          <h2 class="sectionTitle">Contact</h2>
-          <p class="sectionLead">Press inquiries, partnerships, screening requests, and community collaborations.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-            <a class="btn btnPrimary" id="contactEmail" href="mailto:hcunningham2025@outlook.com">Email</a>
-            <a class="btn" href="videos.html">Watch</a>
-            <a class="btn" href="articles.html">Read</a>
-          </div>
-          <div class="muted" style="margin-top:10px">Tip: You can update the hero, about, and contact settings in Admin.</div>
-        </div>
-      </div>
-    </section>
-
+    <div class="small" style="margin-top:16px;line-height:1.5">
+      Upload note: Unlimited video sizes aren’t possible on GitHub/Netlify. For large videos, use YouTube/Facebook and paste URL/embed.
+    </div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <a class="btn" href="/" target="_blank" rel="noopener">View Site</a>
+      <a class="btn btnPrimary" href="/admin/manage-content/">Manage Content</a>
+    </div>
+    <h1 class="h1">Dashboard</h1>
+    <div class="cards">
+      <div class="card"><div class="num" id="c_articles">0</div><div class="lbl">Articles</div></div>
+      <div class="card"><div class="num" id="c_videos">0</div><div class="lbl">Videos</div></div>
+      <div class="card"><div class="num" id="c_documentaries">0</div><div class="lbl">Documentaries</div></div>
+      <div class="card"><div class="num" id="c_investigations">0</div><div class="lbl">Investigations</div></div>
+      <div class="card"><div class="num" id="c_podcasts">0</div><div class="lbl">Podcasts</div></div>
+      <div class="card"><div class="num" id="c_images">0</div><div class="lbl">Images</div></div>
+    </div>
+    <div class="actions">
+      <div style="font-weight:900;margin-bottom:10px">Quick Actions</div>
+      <a class="btn btnPrimary" href="/admin/manage-content/">Open Content Editor</a>
+      <a class="btn" href="/admin/cms/#/media">Upload Images</a>
+      <a class="btn" href="/admin/manage-content/#/collections/library/entries/content%2Flibrary.json">Edit Library</a>
+    </div>
   </main>
-
-  <footer>
-    <div class="container">
-      <div class="footerGrid">
-        <div>
-          <div style="display:flex;gap:10px;align-items:center">
-            <div class="logo">IMI</div>
-            <div>
-              <div style="font-weight:900;letter-spacing:.2px">Inside of Mental Injustice</div>
-              <div class="muted">© <span id="year"></span> • All rights reserved</div>
-            </div>
-          </div>
-          <div class="muted" style="margin-top:10px">
-            
-          </div>
-        </div>
-
-        <div>
-          <div style="font-weight:900;letter-spacing:.2px;margin-bottom:10px">Site Admin</div>
-          <div class="muted">Manage the entire website content (demo mode). For production security we can upgrade to Netlify Identity.</div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-            <a class="btn btnPrimary" href="admin/login.html">Open Admin</a>
-            <a class="btn" href="documentaries.html">Productions</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // YEAR
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // PAGE LOAD banner animation
-    const banner = document.getElementById('banner');
-    window.addEventListener('load', ()=>{ if(banner) banner.classList.add('loaded'); });
-
-    // PARALLAX
-    const a = document.querySelector('.parallaxA');
-    const b = document.querySelector('.parallaxB');
-    function parallax(){
-      const y = window.scrollY || 0;
-      if(a) a.style.transform = `translate3d(0, ${y*0.14}px, 0)`;
-      if(b) b.style.transform = `translate3d(0, ${y*0.08}px, 0)`;
-    }
-    window.addEventListener('scroll', parallax, {passive:true});
-    parallax();
-
-    // REVEAL motion
-    const els = Array.from(document.querySelectorAll('.reveal'));
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-      })
-    }, {threshold:0.14});
-    els.forEach(el=>io.observe(el));
-
-    // SITE CONTENT (Admin-controlled)
-    const contentKey = 'imi_site_content_v1';
-    function loadContent(){
-      try{ const raw = localStorage.getItem(contentKey); return raw ? JSON.parse(raw) : null; }catch{ return null; }
-    }
-    const c = loadContent();
-    if(c){
-      if(c.heroTitle) document.getElementById('heroTitle').textContent = c.heroTitle;
-      if(c.heroSubtitle) document.getElementById('heroSubtitle').textContent = c.heroSubtitle;
-      if(c.aboutText) document.getElementById('aboutText').textContent = c.aboutText;
-
-      if(c.founderName) document.getElementById('founderName').textContent = c.founderName;
-      if(c.founderRole) document.getElementById('founderRole').textContent = c.founderRole;
-      if(c.founderBio) document.getElementById('founderBio').textContent = c.founderBio;
-
-      if(c.founderImgUrl){
-        const img = document.getElementById('founderImg');
-        img.src = c.founderImgUrl;
-        img.onerror = ()=>{ img.src='images/founder.png'; };
-      }
-
-      if(c.contactEmail){
-        const a = document.getElementById('contactEmail');
-        a.href = `mailto:${c.contactEmail}`;
-        a.textContent = c.contactEmail;
-      }
-    }
-  </script>
-</body>
-</html>
+</div>
+<script>
+// Require login
+function requireAuth(){
+  const u = netlifyIdentity.currentUser();
+  if(!u){ window.location.replace('/admin/login.html'); }
+}
+netlifyIdentity.on('init', requireAuth);
+netlifyIdentity.init();
+document.getElementById('logout').addEventListener('click', function(e){
+  e.preventDefault();
+  netlifyIdentity.logout();
+  window.location.replace('/admin/login.html');
+});
+(async function(){
+  const res = await fetch('/content/library.json', {cache:'no-store'});
+  const data = await res.json();
+  const items = data.items || [];
+  const count = (t)=> items.filter(i=>i.type===t).length;
+  document.getElementById('c_articles').textContent = count('articles');
+  document.getElementById('c_videos').textContent = count('videos');
+  document.getElementById('c_documentaries').textContent = count('documentaries');
+  document.getElementById('c_investigations').textContent = count('investigations');
+  document.getElementById('c_podcasts').textContent = count('podcasts');
+  document.getElementById('c_images').textContent = count('images');
+})();
+</script>
+</body></html>
