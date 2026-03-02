@@ -1,0 +1,1 @@
+Place your founder.png in this folder (images/founder.png).
