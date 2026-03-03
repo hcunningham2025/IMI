@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IMI Admin Dashboard</title>
+<link rel="stylesheet" href="/admin-dashboard.css"/>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head><body>
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">IMI</div>
+      <div><div style="font-weight:900">IMI Admin</div><div class="small">Upload & Manage Content</div></div>
+    </div>
+    <div class="nav">
+      <a href="/admin.html">Dashboard</a>
+      <a href="/admin-manage.html">Manage Content</a>
+      <hr style="border:0;border-top:1px solid rgba(200,163,95,.18);margin:14px 0">
+      <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="small" style="margin-top:16px">
+      Note: GitHub/Netlify can’t do unlimited file sizes. For big videos, use YouTube/Facebook/Vimeo and paste the URL.
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <a class="btn" href="/" target="_blank" rel="noopener">View Site</a>
+      <a class="btn btnPrimary" href="/admin-manage.html">Manage Content</a>
+    </div>
+    <h1 class="h1">Dashboard</h1>
+    <div class="cards">
+      <div class="card"><div class="num" id="c_articles">0</div><div class="lbl">Articles</div></div>
+      <div class="card"><div class="num" id="c_videos">0</div><div class="lbl">Videos</div></div>
+      <div class="card"><div class="num" id="c_documentaries">0</div><div class="lbl">Documentaries</div></div>
+      <div class="card"><div class="num" id="c_investigations">0</div><div class="lbl">Investigations</div></div>
+      <div class="card"><div class="num" id="c_podcasts">0</div><div class="lbl">Podcasts</div></div>
+      <div class="card"><div class="num" id="c_images">0</div><div class="lbl">Images</div></div>
+    </div>
+    <div class="actions">
+      <div style="font-weight:900;margin-bottom:10px">Quick Actions</div>
+      <a class="btn btnPrimary" href="/admin-manage.html">+ New Post</a>
+      <a class="btn" href="/images.html">Open Images Page</a>
+      <a class="btn" href="/videos.html">Open Videos Page</a>
+      <a class="btn" href="/articles.html">Open Articles Page</a>
+    </div>
+  </main>
+</div>
+
+<script>
+function requireAuth(){const u=netlifyIdentity.currentUser(); if(!u){window.location.replace('/admin-login.html');}}
+netlifyIdentity.on('init', requireAuth); netlifyIdentity.init();
+document.getElementById('logout').addEventListener('click', function(e){e.preventDefault(); netlifyIdentity.logout(); window.location.replace('/admin-login.html');});
+
+(async function(){
+  try{
+    const res=await fetch('/content/library.json',{cache:'no-store'});
+    const data=await res.json(); const items=data.items||[];
+    const count=(t)=>items.filter(i=>i.type===t).length;
+    document.getElementById('c_articles').textContent=count('articles');
+    document.getElementById('c_videos').textContent=count('videos');
+    document.getElementById('c_documentaries').textContent=count('documentaries');
+    document.getElementById('c_investigations').textContent=count('investigations');
+    document.getElementById('c_podcasts').textContent=count('podcasts');
+    document.getElementById('c_images').textContent=count('images');
+  }catch(e){}
+})();
+</script>
+</body></html>

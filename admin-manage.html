@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IMI Admin — Manage Content</title>
+<link rel="stylesheet" href="/admin-dashboard.css"/>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head><body>
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">IMI</div>
+      <div><div style="font-weight:900">IMI Admin</div><div class="small">Create content (demo)</div></div>
+    </div>
+    <div class="nav">
+      <a href="/admin.html">Dashboard</a>
+      <a href="/admin-manage.html">Manage Content</a>
+      <hr style="border:0;border-top:1px solid rgba(200,163,95,.18);margin:14px 0">
+      <a href="#" id="logout">Logout</a>
+    </div>
+    <div class="small" style="margin-top:16px">
+      This screen lets you add items, but to SAVE changes to the live site you need a backend write (Netlify Functions/DB) or CMS.
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <a class="btn" href="/admin.html">Back</a>
+      <a class="btn" href="/" target="_blank" rel="noopener">View Site</a>
+    </div>
+    <h1 class="h1">Manage Content</h1>
+
+    <div class="card" style="max-width:860px">
+      <form id="form">
+        <label>Type</label>
+        <select name="type" required>
+          <option value="videos">Video</option>
+          <option value="images">Image</option>
+          <option value="articles">Article</option>
+          <option value="documentaries">Documentary</option>
+          <option value="investigations">Investigation</option>
+          <option value="podcasts">Podcast</option>
+        </select>
+
+        <label>Title</label>
+        <input name="title" required placeholder="Title"/>
+
+        <label>Description</label>
+        <textarea name="description" rows="4" placeholder="Description"></textarea>
+
+        <label>URL (paste link)</label>
+        <input name="url" placeholder="https://..."/>
+
+        <label>Embed URL (videos)</label>
+        <input name="embed" placeholder="https://..."/>
+
+        <label>Thumbnail (drag & drop upload)</label>
+        <input type="file" name="thumbnail" />
+
+        <div style="margin-top:12px">
+          <button class="btn btnPrimary" type="submit">Add Item (local demo)</button>
+          <button class="btn" type="button" id="clear">Clear</button>
+        </div>
+        <p class="small" style="margin-top:12px">This demo stores items in your browser only. Tell me if you want the “REAL SAVE” version (Netlify Functions + database) so uploads appear on the site immediately.</p>
+      </form>
+    </div>
+  </main>
+</div>
+<script>
+function requireAuth(){const u=netlifyIdentity.currentUser(); if(!u){window.location.replace('/admin-login.html');}}
+netlifyIdentity.on('init', requireAuth); netlifyIdentity.init();
+document.getElementById('logout').addEventListener('click', function(e){e.preventDefault(); netlifyIdentity.logout(); window.location.replace('/admin-login.html');});
+
+const key='imi_admin_local_items';
+const form=document.getElementById('form');
+document.getElementById('clear').onclick=()=>form.reset();
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const fd=new FormData(form);
+  const item=Object.fromEntries(fd.entries());
+  item.date=new Date().toISOString();
+  // Note: thumbnail upload needs backend; here we only keep filename
+  if(fd.get('thumbnail') && fd.get('thumbnail').name) item.thumbnail=fd.get('thumbnail').name;
+  const items=JSON.parse(localStorage.getItem(key)||'[]');
+  items.unshift(item);
+  localStorage.setItem(key, JSON.stringify(items));
+  alert('Saved locally (demo). For real publishing, we need Netlify Functions + DB.');
+  form.reset();
+});
+</script>
+</body></html>

@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IMI Admin Login</title>
+<link rel="stylesheet" href="/admin-dashboard.css"/>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head><body>
+<div style="min-height:100vh;display:grid;place-items:center;padding:24px">
+  <div class="card" style="max-width:520px;width:100%">
+    <h1 class="h1">IMI Admin</h1>
+    <p class="lbl">Sign in to manage content.</p>
+    <div style="margin-top:14px">
+      <a class="btn btnPrimary" href="#" id="openLogin">Sign In</a>
+      <a class="btn" href="/">Back to Site</a>
+    </div>
+    <p class="small" style="margin-top:14px">
+      Netlify → Site settings → Identity → Enable Identity + Git Gateway, then invite <b>hcunningham2025@outlook.com</b>.
+    </p>
+  </div>
+</div>
+<script>
+document.getElementById('openLogin').addEventListener('click', function(e){e.preventDefault(); netlifyIdentity.open('login');});
+netlifyIdentity.on('login', function(){ netlifyIdentity.close(); window.location.href='/admin.html'; });
+</script>
+</body></html>
